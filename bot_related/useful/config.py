@@ -1,8 +1,8 @@
 import aiogram
 import dotenv
-import ww_casino.bot_related.cfg as cfg
+import os
 
 dotenv.load_dotenv()
 
-bot = aiogram.Bot(token=cfg.TG_BOT_TOKEN)
+bot = aiogram.Bot(token=os.getenv('TG_BOT_TOKEN'))
 dp = aiogram.Dispatcher()
