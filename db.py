@@ -18,6 +18,7 @@ class DB:
     def if_registered_check(chat_id):
         try:
             DB.cursor.execute(f'SELECT NOT EXISTS (SELECT {chat_id} FROM "user")')
+
         except psycopg2.InterfaceError as ie:
             DB.reopen_cursor_and_connection()
             DB.cursor.execute(f'SELECT NOT EXISTS (SELECT {chat_id} FROM "user")')
@@ -37,6 +38,17 @@ class DB:
 
         DB.cursor.execute(
             'UPDATE "user" SET balance = ' + f'jsonb_set(balance::jsonb, ' + "'{" + f"{currency}" + "}', " + f"'{json.dumps(decimal.Decimal(str(current_balance)) + amount, ensure_ascii=False, default=str)}') " + f'WHERE "chat_id" = {chat_id}')
+
+    @staticmethod
+    def get_balance(currency='all'):
+        if currency == 'all':
+            DB.cursor.execute('SELECT balance FROM "user"')
+
+        else:
+            DB.cursor.execute(f"SELECT balance -> '{currency}' AS " + f'"{currency}" FROM "user"')
+
+        return DB.cursor.fetchone()[0]
+
 
     # @staticmethod
     # def update_user_final_income():
