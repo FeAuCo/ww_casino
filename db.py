@@ -40,7 +40,7 @@ class DB:
             'UPDATE "user" SET balance = ' + f'jsonb_set(balance::jsonb, ' + "'{" + f"{currency}" + "}', " + f"'{json.dumps(decimal.Decimal(str(current_balance)) + amount, ensure_ascii=False, default=str)}') " + f'WHERE "chat_id" = {chat_id}')
 
     @staticmethod
-    def get_balance(currency='all'):
+    def get_balance(currency):
         if currency == 'all':
             DB.cursor.execute('SELECT balance FROM "user"')
 
