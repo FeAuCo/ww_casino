@@ -37,7 +37,8 @@ def give_card(entity, fair, day_balance, bet, dil_table, cards, pl_table):
             pl_table += pl_card
         print("Игроку выдана карта ", pl_card, " общая сумма ", pl_table)
 
-    return
+    return pl_table, dil_table
+
 
 def checker(current_list, sum_cards):
     good = 0

@@ -12,14 +12,19 @@ def black_jack(day_balance, bet):
 
     for x in range(2):
         if x == 1:
-            useful.give_card(1, fair, day_balance, bet, dil_table, cards, pl_table)
-        useful.give_card(0, fair, day_balance, bet, dil_table, cards, pl_table)
+            pl_table = useful.give_card(1, fair, day_balance, bet, dil_table, cards, pl_table)
+            dil_table = useful.give_card(1, fair, day_balance, bet, dil_table, cards, pl_table)
+
+        pl_table = useful.give_card(0, fair, day_balance, bet, dil_table, cards, pl_table)
+        dil_table = useful.give_card(0, fair, day_balance, bet, dil_table, cards, pl_table)
 
     answer = input("Вы хотите сделать дабл?\n")
     if answer == "Yes":
         # ПРОВЕРКА БАЛАНСА НА НАЛИЧИЕ ДЕНЕГ ДЛЯ ДАБЛА
         bet *= 2
-        useful.give_card(0, fair, day_balance, bet, dil_table, cards, pl_table)
+        pl_table = useful.give_card(0, fair, day_balance, bet, dil_table, cards, pl_table)
+        dil_table = useful.give_card(0, fair, day_balance, bet, dil_table, cards, pl_table)
+
         answer = None
         if pl_table > 21:
             print("У вас перебор")
@@ -29,7 +34,8 @@ def black_jack(day_balance, bet):
         answer = input("Вы хотите взять еще 1 карту?\n")
 
     while answer == "Yes":
-        useful.give_card(0, fair, day_balance, bet, dil_table, cards, pl_table)
+        pl_table = useful.give_card(0, fair, day_balance, bet, dil_table, cards, pl_table)
+        dil_table = useful.give_card(0, fair, day_balance, bet, dil_table, cards, pl_table)
         if pl_table > 21:
             print("У вас перебор")
             day_balance += bet
